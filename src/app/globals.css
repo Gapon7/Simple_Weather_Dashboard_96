@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Background is now set dynamically on the container */
+  @apply text-foreground transition-colors duration-500 ease-in-out; /* Longer transition for background */
+}
+
+/* HSL Variables (Adjusted for Light Blue/Gray/Teal scheme) */
+:root {
+  /* Main Theme Colors - Keeping the base but background will be overridden */
+  --background-hsl: 192 67% 95%; /* Light Blue (#E0F7FA) - Fallback/Base */
+  --foreground-hsl: 200 17% 45%; /* Medium Gray (#607D8B) */
+
+  --card-hsl: 0 0% 100%; /* White */
+  --card-foreground-hsl: 222.2 47.4% 11.2%;
+
+  --popover-hsl: 0 0% 100%;
+  --popover-foreground-hsl: 222.2 47.4% 11.2%;
+
+  --primary-hsl: 174 63% 40%; /* Teal (#26A69A) */
+  --primary-foreground-hsl: 0 0% 100%;
+
+  --secondary-hsl: 200 17% 90%; /* Lighter Gray (#E0E0E0) */
+  --secondary-foreground-hsl: 222.2 47.4% 11.2%;
+
+  --muted-hsl: 200 17% 85%;
+  --muted-foreground-hsl: 200 17% 55%;
+
+  --accent-hsl: 221.2 83.2% 53.3%; /* Royal Blue */
+  --accent-foreground-hsl: 0 0% 100%;
+
+  --destructive-hsl: 0 84.2% 60.2%; /* Red */
+  --destructive-foreground-hsl: 0 0% 100%;
+
+  --border-hsl: 200 17% 80%; /* Gray Border (#B0BEC5) */
+  --input-hsl: 200 17% 80%;
+  --ring-hsl: 174 63% 40%; /* Teal for focus rings */
+
+  --radius: 0.75rem;
+
+  /* Assign HSL to CSS variables */
+  --background: var(--background-hsl);
+  --foreground: var(--foreground-hsl);
+  --card: var(--card-hsl);
+  --card-foreground: var(--card-foreground-hsl);
+  --popover: var(--popover-hsl);
+  --popover-foreground: var(--popover-foreground-hsl);
+  --primary: var(--primary-hsl);
+  --primary-foreground: var(--primary-foreground-hsl);
+  --secondary: var(--secondary-hsl);
+  --secondary-foreground: var(--secondary-foreground-hsl);
+  --muted: var(--muted-hsl);
+  --muted-foreground: var(--muted-foreground-hsl);
+  --accent: var(--accent-hsl);
+  --accent-foreground: var(--accent-foreground-hsl);
+  --destructive: var(--destructive-hsl);
+  --destructive-foreground: var(--destructive-foreground-hsl);
+  --border: var(--border-hsl);
+  --input: var(--input-hsl);
+  --ring: var(--ring-hsl);
+
+  /* Sidebar Specific Variables (Should use main theme vars) */
+  --sidebar-background: var(--card-hsl); /* Use card background */
+  --sidebar-foreground: var(--card-foreground-hsl); /* Use card foreground */
+  --sidebar-primary: var(--primary-hsl); /* Use primary */
+  --sidebar-primary-foreground: var(--primary-foreground-hsl); /* Use primary foreground */
+  --sidebar-accent: var(--secondary-hsl); /* Use secondary for hover */
+  --sidebar-accent-foreground: var(--secondary-foreground-hsl); /* Use secondary foreground */
+  --sidebar-border: var(--border-hsl); /* Use border */
+  --sidebar-ring: var(--ring-hsl); /* Use ring */
+}
+
+/* No dark mode defined for now */
+.dark {
+  /* Define dark mode variables if needed */
+}
+
+/* Layout and Container Styles */
+.dashboard-container {
+  @apply min-h-screen flex flex-col p-4 md:p-6; /* Base styling, background applied via utility */
+  transition: background 0.5s ease-in-out; /* Smooth background transition */
+}
+
+.section-container {
+  /* Default section styling, dynamic background handled by getWeatherThemeClass */
+  @apply rounded-xl shadow-lg p-6 mb-6 w-full max-w-4xl transition-all duration-300 ease-in-out;
+  @apply hover:shadow-xl;
+   /* Default to card style if no specific theme is applied */
+  @apply bg-card text-card-foreground;
+}
+
+/* Search Bar Styles */
+.search-container {
+  @apply flex items-center bg-card rounded-full border border-border shadow-sm px-4 py-1 mb-4 w-full max-w-xl transition-shadow duration-300 focus-within:shadow-md;
+}
+
+.search-icon {
+  @apply text-muted-foreground mr-3;
+}
+
+.search-input {
+  @apply bg-transparent border-none outline-none text-foreground placeholder-muted-foreground w-full text-base py-1 flex-grow;
+}
+
+.search-button {
+  @apply ml-2 py-2 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full shadow-md transition-all duration-300 ease-in-out;
+  @apply flex items-center justify-center flex-shrink-0;
+}
+
+.location-button {
+    @apply ml-2 bg-card border border-primary text-primary hover:bg-secondary;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+     flex-shrink: 0;
+}
+.location-button:hover {
+    @apply shadow-md scale-105;
+}
+
+
+/* Main Weather Info Styles */
+.city-name {
+   /* Use text-foreground for contrast, size adjusted */
+  @apply text-3xl md:text-4xl font-bold text-foreground mb-1 transition-colors duration-300;
+}
+
+.temperature {
+  /* Increased font size and use foreground for contrast */
+  @apply text-6xl md:text-8xl font-bold text-foreground transition-colors duration-300;
+}
+
+/* Weather Details Styles */
+.weather-details {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+}
+
+.detail-item {
+  /* Slightly lighter background for detail items */
+  @apply flex items-center justify-between py-3 px-4 bg-background/60 rounded-lg border border-border/50 transition-all duration-300 ease-in-out backdrop-blur-sm;
+   @apply hover:bg-secondary hover:shadow-sm;
+}
+
+.detail-label {
+  @apply text-sm font-medium text-muted-foreground flex items-center;
+}
+
+.detail-value {
+  @apply text-sm font-semibold text-foreground;
+}
+
+
+/* 5-Day Forecast Styles */
+.forecast-grid {
+  @apply flex overflow-x-auto space-x-4 pb-4 pt-2 -mx-6 px-6 relative; /* Add relative for scroll hint positioning */
+   scrollbar-width: thin;
+   scrollbar-color: hsla(var(--primary-hsl), 0.5) hsla(var(--secondary-hsl), 0.5);
+}
+.forecast-grid::-webkit-scrollbar { height: 8px; }
+.forecast-grid::-webkit-scrollbar-track { background: hsla(var(--secondary-hsl), 0.5); border-radius: 10px; }
+.forecast-grid::-webkit-scrollbar-thumb { background-color: hsla(var(--primary-hsl), 0.5); border-radius: 10px; border: 2px solid hsla(var(--secondary-hsl), 0.5); }
+
+.forecast-card {
+  /* Consistent styling with details */
+  @apply flex-none w-36 bg-background/60 shadow-md rounded-xl p-4 text-center transition-transform duration-300 ease-in-out border border-border/50 backdrop-blur-sm;
+  @apply hover:scale-105 hover:shadow-lg;
+}
+
+.forecast-card-title {
+  @apply text-sm font-semibold text-foreground mb-1;
+}
+
+.forecast-temperature {
+  @apply text-lg font-bold text-accent;
+}
+.forecast-temperature .text-muted-foreground {
+   @apply text-xs font-normal;
+}
+
+.forecast-description {
+  @apply text-xs text-muted-foreground mt-1 capitalize;
+}
+
+/* Hourly Forecast Styles */
+.hourly-forecast-grid {
+  @apply flex overflow-x-auto space-x-3 pb-4 pt-2 -mx-6 px-6 relative; /* Slightly smaller spacing */
+  scrollbar-width: thin;
+  scrollbar-color: hsla(var(--primary-hsl), 0.4) hsla(var(--secondary-hsl), 0.4); /* Lighter scrollbar */
+}
+.hourly-forecast-grid::-webkit-scrollbar { height: 6px; } /* Thinner scrollbar */
+.hourly-forecast-grid::-webkit-scrollbar-track { background: hsla(var(--secondary-hsl), 0.4); border-radius: 8px; }
+.hourly-forecast-grid::-webkit-scrollbar-thumb { background-color: hsla(var(--primary-hsl), 0.4); border-radius: 8px; border: 1px solid hsla(var(--secondary-hsl), 0.4); }
+
+.hourly-forecast-card {
+  /* Smaller card for hourly */
+  @apply flex-none w-28 bg-background/60 shadow-sm rounded-lg p-3 text-center transition-transform duration-300 ease-in-out border border-border/50 backdrop-blur-sm;
+  @apply hover:scale-105 hover:shadow-md;
+}
+
+
+/* Alert Section Styles */
+.section-title {
+    @apply text-xl font-semibold text-foreground mb-4;
+}
+.alert-container {
+    @apply relative overflow-hidden h-8; /* Ensure height matches text */
+}
+.alert-text {
+    /* Updated for black, bold text */
+    @apply absolute inset-0 transition-transform duration-700 ease-in-out text-base font-bold text-black flex items-center justify-center text-center px-2;
+}
+
+
+/* Other Styles */
+.error-message {
+  @apply text-destructive text-sm font-medium;
+}
+
+/* Apply Base Transitions */
+.section-container, .detail-item, .forecast-card, .hourly-forecast-card, .search-button, .location-button, input, button {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Apply HSL variables */
+@layer base {
+  :root {
+    --background: hsl(var(--background-hsl));
+    --foreground: hsl(var(--foreground-hsl));
+    --card: hsl(var(--card-hsl));
+    --card-foreground: hsl(var(--card-foreground-hsl));
+    --popover: hsl(var(--popover-hsl));
+    --popover-foreground: hsl(var(--popover-foreground-hsl));
+    --primary: hsl(var(--primary-hsl));
+    --primary-foreground: hsl(var(--primary-foreground-hsl));
+    --secondary: hsl(var(--secondary-hsl));
+    --secondary-foreground: hsl(var(--secondary-foreground-hsl));
+    --muted: hsl(var(--muted-hsl));
+    --muted-foreground: hsl(var(--muted-foreground-hsl));
+    --accent: hsl(var(--accent-hsl));
+    --accent-foreground: hsl(var(--accent-foreground-hsl));
+    --destructive: hsl(var(--destructive-hsl));
+    --destructive-foreground: hsl(var(--destructive-foreground-hsl));
+    --border: hsl(var(--border-hsl));
+    --input: hsl(var(--input-hsl));
+    --ring: hsl(var(--ring-hsl));
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: hsl(var(--sidebar-background));
+    --sidebar-foreground: hsl(var(--sidebar-foreground));
+    --sidebar-primary: hsl(var(--sidebar-primary));
+    --sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+    --sidebar-accent: hsl(var(--sidebar-accent));
+    --sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+    --sidebar-border: hsl(var(--sidebar-border));
+    --sidebar-ring: hsl(var(--sidebar-ring));
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    /* Background applied on container */
+    @apply text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
